@@ -1,62 +1,73 @@
-## Host Link:- https://to-do-9eff1.web.app/********
+# Angular + Firebase TODO App
 
+## Host Link:- https://to-do-9eff1.web.app/
 
-# TodoFirebase
+A real-time TODO application built with Angular 21 and Firebase Firestore.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.2.
+## Features
 
-## Development server
+### Core Features ✅
+- **Create TODO** - Add new todos with title, description, and status
+- **Update TODO** - Edit existing todos
+- **Mark Status** - Toggle between Pending → In Progress → Completed
+- **List TODOs** - Real-time updates from Firestore
 
-To start a local development server, run:
+### Optional Features ✅
+- **Group by Date** - TODOs grouped into Today, Yesterday, and Older sections
 
+## Tech Stack
+- Angular 21
+- Reactive Forms
+- Firebase Firestore (real-time database)
+- TypeScript
+
+## Setup
+
+### 1. Install Dependencies
 ```bash
-ng serve
+npm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 2. Configure Firebase
 
-## Code scaffolding
+1. Create a Firebase project at [Firebase Console](https://console.firebase.google.com)
+2. Enable Firestore Database
+3. Update `src/environments/environment.ts` with your Firebase config:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```typescript
+export const environment = {
+  production: false,
+  firebase: {
+    apiKey: 'YOUR_API_KEY',
+    authDomain: 'YOUR_PROJECT_ID.firebaseapp.com',
+    projectId: 'YOUR_PROJECT_ID',
+    storageBucket: 'YOUR_PROJECT_ID.appspot.com',
+    messagingSenderId: 'YOUR_SENDER_ID',
+    appId: 'YOUR_APP_ID'
+  }
+};
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+### 3. Run the App
 ```bash
-ng generate --help
+npm start
 ```
 
-## Building
+Navigate to `http://localhost:4200`
 
-To build the project run:
+## Firestore Structure
 
-```bash
-ng build
+```
+Collection: todos
+├── id: string (auto-generated)
+├── title: string
+├── description: string
+├── status: 'pending' | 'in-progress' | 'completed'
+├── createdAt: Timestamp
+└── updatedAt: Timestamp
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Pages
+- **/** - Todo List (home)
+- **/add** - Add new todo
+- **/edit/:id** - Edit existing todo

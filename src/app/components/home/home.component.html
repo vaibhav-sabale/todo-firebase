@@ -1,0 +1,29 @@
+<div class="home-container">
+  <header class="home-header">
+    <h1>✨ Todo App</h1>
+    <p>Stay organized, get things done</p>
+  </header>
+
+  <nav class="tabs">
+    <button 
+      class="tab" 
+      [class.active]="activeTab() === 'list'"
+      (click)="setTab('list')">
+      📋 My Todos
+    </button>
+    <button 
+      class="tab" 
+      [class.active]="activeTab() === 'add'"
+      (click)="setTab('add')">
+      ✨ New Todo
+    </button>
+  </nav>
+
+  <div class="tab-content">
+    @if (activeTab() === 'list') {
+      <app-todo-list />
+    } @else {
+      <app-todo-form />
+    }
+  </div>
+</div>

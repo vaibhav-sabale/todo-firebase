@@ -1,0 +1,73 @@
+<div class="todo-list-container">
+  @if (loading()) {
+    <div class="loading">Loading todos...</div>
+  } @else if (todos().length === 0) {
+    <div class="empty-state">
+      <p>No todos yet. Create your first one!</p>
+    </div>
+  } @else {
+    @if (groupedTodos().today.length > 0) {
+      <section class="todo-section">
+        <h2 class="section-title">📅 Today</h2>
+        @for (todo of groupedTodos().today; track todo.id) {
+          <div class="todo-card" [class]="getStatusClass(todo.status)">
+            <div class="todo-content">
+              <h3 class="todo-title">{{ todo.title }}</h3>
+              <p class="todo-description">{{ todo.description }}</p>
+              <div class="todo-meta">
+                <span class="status-badge" [class]="getStatusClass(todo.status)">{{ todo.status }}</span>
+                <span class="date">{{ formatDate(todo.createdAt) }}</span>
+              </div>
+            </div>
+            <div class="todo-actions">
+              <a [routerLink]="['/edit', todo.id]" class="btn btn-sm btn-edit">✏️ Edit</a>
+              <button class="btn btn-sm btn-delete" (click)="deleteTodo(todo)">🗑️</button>
+            </div>
+          </div>
+        }
+      </section>
+    }
+    @if (groupedTodos().yesterday.length > 0) {
+      <section class="todo-section">
+        <h2 class="section-title">📆 Yesterday</h2>
+        @for (todo of groupedTodos().yesterday; track todo.id) {
+          <div class="todo-card" [class]="getStatusClass(todo.status)">
+            <div class="todo-content">
+              <h3 class="todo-title">{{ todo.title }}</h3>
+              <p class="todo-description">{{ todo.description }}</p>
+              <div class="todo-meta">
+                <span class="status-badge" [class]="getStatusClass(todo.status)">{{ todo.status }}</span>
+                <span class="date">{{ formatDate(todo.createdAt) }}</span>
+              </div>
+            </div>
+            <div class="todo-actions">
+              <a [routerLink]="['/edit', todo.id]" class="btn btn-sm btn-edit">✏️ Edit</a>
+              <button class="btn btn-sm btn-delete" (click)="deleteTodo(todo)">🗑️</button>
+            </div>
+          </div>
+        }
+      </section>
+    }
+    @if (groupedTodos().older.length > 0) {
+      <section class="todo-section">
+        <h2 class="section-title">🗓️ Older</h2>
+        @for (todo of groupedTodos().older; track todo.id) {
+          <div class="todo-card" [class]="getStatusClass(todo.status)">
+            <div class="todo-content">
+              <h3 class="todo-title">{{ todo.title }}</h3>
+              <p class="todo-description">{{ todo.description }}</p>
+              <div class="todo-meta">
+                <span class="status-badge" [class]="getStatusClass(todo.status)">{{ todo.status }}</span>
+                <span class="date">{{ formatDate(todo.createdAt) }}</span>
+              </div>
+            </div>
+            <div class="todo-actions">
+              <a [routerLink]="['/edit', todo.id]" class="btn btn-sm btn-edit">✏️ Edit</a>
+              <button class="btn btn-sm btn-delete" (click)="deleteTodo(todo)">🗑️</button>
+            </div>
+          </div>
+        }
+      </section>
+    }
+  }
+</div>

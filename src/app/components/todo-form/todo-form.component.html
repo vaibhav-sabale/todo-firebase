@@ -1,0 +1,69 @@
+<div class="form-container" [class.embedded]="!isEditMode()">
+  @if (isEditMode()) {
+    <header class="header">
+      <a routerLink="/" class="back-link">← Back to Home</a>
+      <h1>✏️ Edit To-Do</h1>
+    </header>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading...</div>
+  } @else {
+    @if (successMessage()) {
+      <div class="success-message">✅ {{ successMessage() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="todo-form">
+      <div class="form-group">
+        <label for="title">Title *</label>
+        <input 
+          id="title" 
+          type="text" 
+          formControlName="title" 
+          placeholder="What needs to be done?"
+          [class.invalid]="f['title'].touched && f['title'].invalid">
+        @if (f['title'].touched && f['title'].errors) {
+          <span class="error">
+            @if (f['title'].errors['required']) { Title is required }
+            @else if (f['title'].errors['minlength']) { Title must be at least 3 characters }
+          </span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description *</label>
+        <textarea 
+          id="description" 
+          formControlName="description" 
+          rows="4"
+          placeholder="Add more details..."
+          [class.invalid]="f['description'].touched && f['description'].invalid">
+        </textarea>
+        @if (f['description'].touched && f['description'].errors?.['required']) {
+          <span class="error">Description is required</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" formControlName="status">
+          @for (status of statuses; track status.value) {
+            <option [value]="status.value">{{ status.label }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-actions">
+        @if (isEditMode()) {
+          <a routerLink="/" class="btn btn-secondary">Cancel</a>
+        }
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          [disabled]="submitting()">
+          {{ submitting() ? 'Saving...' : (isEditMode() ? 'Update Todo' : '➕ Add Todo') }}
+        </button>
+      </div>
+    </form>
+  }
+</div>
