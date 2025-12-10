@@ -1,4 +1,5 @@
 import { Component, inject, signal, computed, OnInit, OnDestroy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TodoService } from '../../services/todo.service';
@@ -14,7 +15,7 @@ interface GroupedTodos {
 @Component({
   selector: 'app-todo-list',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css'
 })
@@ -24,9 +25,36 @@ export class TodoListComponent implements OnInit, OnDestroy {
 
   todos = signal<Todo[]>([]);
   loading = signal(true);
+  
+  // Search & Filter
+  searchQuery = signal('');
+  statusFilter = signal<'all' | TodoStatus>('all');
 
+  // Filtered todos based on search and status
+  filteredTodos = computed(() => {
+    let result = this.todos();
+    
+    // Apply status filter
+    const status = this.statusFilter();
+    if (status !== 'all') {
+      result = result.filter(todo => todo.status === status);
+    }
+    
+    // Apply search filter
+    const query = this.searchQuery().toLowerCase().trim();
+    if (query) {
+      result = result.filter(todo =>
+        todo.title.toLowerCase().includes(query) ||
+        todo.description.toLowerCase().includes(query)
+      );
+    }
+    
+    return result;
+  });
+
+  // Grouped todos (uses filtered results)
   groupedTodos = computed<GroupedTodos>(() => {
-    const all = this.todos();
+    const all = this.filteredTodos();
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const yesterday = new Date(today);
@@ -78,5 +106,20 @@ export class TodoListComponent implements OnInit, OnDestroy {
 
   getStatusClass(status: TodoStatus): string {
     return `status-${status}`;
+  }
+
+  onSearch(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchQuery.set(value);
+  }
+
+  onFilterChange(event: Event) {
+    const value = (event.target as HTMLSelectElement).value as 'all' | TodoStatus;
+    this.statusFilter.set(value);
+  }
+
+  clearFilters() {
+    this.searchQuery.set('');
+    this.statusFilter.set('all');
   }
 }

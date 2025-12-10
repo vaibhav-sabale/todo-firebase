@@ -10,6 +10,14 @@
   margin-bottom: 32px;
 }
 
+.header-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
 .home-header h1 {
   margin: 0;
   font-size: 2.5rem;
@@ -23,6 +31,24 @@
   margin: 8px 0 0;
   color: rgba(255,255,255,0.8);
   font-size: 1.1rem;
+}
+
+.dark-mode-toggle {
+  position: absolute;
+  right: 0;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.1);
 }
 
 .tabs {
@@ -68,4 +94,15 @@
   box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
   border: 1px solid rgba(255,255,255,0.3);
   overflow: hidden;
+}
+
+/* Dark Mode Styles */
+:host-context(body.dark-mode) .tab.active {
+  background: #1e293b;
+  color: #818cf8;
+}
+
+:host-context(body.dark-mode) .tab-content {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(71, 85, 105, 0.5);
 }

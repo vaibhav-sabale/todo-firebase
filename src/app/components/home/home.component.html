@@ -1,6 +1,11 @@
 <div class="home-container">
   <header class="home-header">
-    <h1>✨ Todo App</h1>
+    <div class="header-top">
+      <h1>✨ Todo App</h1>
+      <button class="dark-mode-toggle" (click)="toggleDarkMode()">
+        {{ darkMode() ? '☀️' : '🌙' }}
+      </button>
+    </div>
     <p>Stay organized, get things done</p>
   </header>
 

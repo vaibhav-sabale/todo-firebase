@@ -183,3 +183,50 @@
 .btn-secondary:hover {
   background: #e5e7eb;
 }
+
+/* Dark Mode Styles */
+:host-context(body.dark-mode) .form-group label {
+  color: #e2e8f0;
+}
+
+:host-context(body.dark-mode) .form-group input,
+:host-context(body.dark-mode) .form-group textarea,
+:host-context(body.dark-mode) .form-group select {
+  background: #334155;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+:host-context(body.dark-mode) .form-group input:focus,
+:host-context(body.dark-mode) .form-group textarea:focus,
+:host-context(body.dark-mode) .form-group select:focus {
+  border-color: #818cf8;
+  background: #1e293b;
+}
+
+:host-context(body.dark-mode) .form-group input::placeholder,
+:host-context(body.dark-mode) .form-group textarea::placeholder {
+  color: #94a3b8;
+}
+
+:host-context(body.dark-mode) .todo-form {
+  background: transparent;
+}
+
+:host-context(body.dark-mode) .form-container:not(.embedded) .todo-form {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(71, 85, 105, 0.5);
+}
+
+:host-context(body.dark-mode) .btn-secondary {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+:host-context(body.dark-mode) .btn-secondary:hover {
+  background: #475569;
+}
+
+:host-context(body.dark-mode) .loading {
+  color: #94a3b8;
+}

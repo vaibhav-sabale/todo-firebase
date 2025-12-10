@@ -1,9 +1,35 @@
 <div class="todo-list-container">
+  <!-- Search & Filter Bar -->
+  <div class="filters-bar">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input 
+        type="text" 
+        placeholder="Search todos..." 
+        [value]="searchQuery()"
+        (input)="onSearch($event)">
+    </div>
+    <select class="filter-select" [value]="statusFilter()" (change)="onFilterChange($event)">
+      <option value="all">All Status</option>
+      <option value="pending">⏳ Pending</option>
+      <option value="in-progress">🔄 In Progress</option>
+      <option value="completed">✅ Completed</option>
+    </select>
+    @if (searchQuery() || statusFilter() !== 'all') {
+      <button class="btn-clear" (click)="clearFilters()">✕ Clear</button>
+    }
+  </div>
+
   @if (loading()) {
     <div class="loading">Loading todos...</div>
-  } @else if (todos().length === 0) {
+  } @else if (filteredTodos().length === 0) {
     <div class="empty-state">
-      <p>No todos yet. Create your first one!</p>
+      @if (todos().length === 0) {
+        <p>No todos yet. Create your first one!</p>
+      } @else {
+        <p>No todos match your search.</p>
+        <button class="btn-link" (click)="clearFilters()">Clear filters</button>
+      }
     </div>
   } @else {
     @if (groupedTodos().today.length > 0) {
